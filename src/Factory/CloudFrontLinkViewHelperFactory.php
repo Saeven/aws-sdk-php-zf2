@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Factory;
 
 use Aws\Sdk as AwsSdk;
@@ -13,14 +15,13 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class CloudFrontLinkViewHelperFactory implements FactoryInterface
 {
-
     /**
      * @param ContainerInterface $container
      * @param string             $requestedName
      * @param array|null         $options
      * @return CloudFrontLink
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         /** @var AwsSdk $awsSdk */
         $awsSdk = $container->get(AwsSdk::class);
@@ -30,6 +31,7 @@ class CloudFrontLinkViewHelperFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @return CloudFrontLink
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -1,29 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\View\Helper;
 
 use Aws\S3\S3Client;
 use AwsModule\View\Exception\InvalidDomainNameException;
 use Laminas\View\Helper\AbstractHelper;
 
+use function trim;
+
 /**
  * View helper that can render a link to a S3 object. It can also create signed URLs
  */
 class S3Link extends AbstractHelper
 {
-    /**
-     * @var S3Client
-     */
+    /** @var S3Client */
     protected $client;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $defaultBucket = '';
 
-    /**
-     * @param S3Client $client
-     */
     public function __construct(S3Client $client)
     {
         $this->client = $client;
@@ -33,7 +30,6 @@ class S3Link extends AbstractHelper
      * Set the default bucket to use if none is provided
      *
      * @param string $defaultBucket
-     *
      * @return self
      */
     public function setDefaultBucket($defaultBucket)
@@ -74,7 +70,7 @@ class S3Link extends AbstractHelper
         if ($expiration) {
             $command = $this->client->getCommand('GetObject', [
                 'Bucket' => $bucket,
-                'Key'    => $object
+                'Key'    => $object,
             ]);
 
             return $this->client->createPresignedRequest($command, $expiration)->getUri()->__toString();

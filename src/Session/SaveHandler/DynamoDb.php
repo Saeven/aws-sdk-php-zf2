@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Session\SaveHandler;
 
 use Aws\Dynamodb\SessionHandler;
@@ -10,9 +12,7 @@ use Laminas\Session\SaveHandler\SaveHandlerInterface;
  */
 class DynamoDb implements SaveHandlerInterface
 {
-    /**
-     * @var SessionHandler
-     */
+    /** @var SessionHandler */
     protected $sessionHandler;
 
     /**
@@ -32,7 +32,6 @@ class DynamoDb implements SaveHandlerInterface
      *
      * @param  string $savePath Session save path
      * @param  string $name     Session name
-     *
      * @return bool Whether or not the operation succeeded
      */
     public function open($savePath, $name)
@@ -58,7 +57,6 @@ class DynamoDb implements SaveHandlerInterface
      * Part of the standard PHP session handler interface
      *
      * @param string $id The session ID
-     *
      * @return string Session data
      */
     public function read($id)
@@ -73,7 +71,6 @@ class DynamoDb implements SaveHandlerInterface
      *
      * @param string $id   The session ID
      * @param string $data The serialized session data
-     *
      * @return bool Whether or not the operation succeeded
      */
     public function write($id, $data)
@@ -87,7 +84,6 @@ class DynamoDb implements SaveHandlerInterface
      * Part of the standard PHP session handler interface
      *
      * @param string $id The session ID
-     *
      * @return bool Whether or not the operation succeeded
      */
     public function destroy($id)
@@ -101,7 +97,6 @@ class DynamoDb implements SaveHandlerInterface
      * Part of the standard PHP session handler interface
      *
      * @param int $maxlifetime The value of `session.gc_maxlifetime`. Ignored.
-     *
      * @return bool Whether or not the operation succeeded
      */
     public function gc($maxlifetime)

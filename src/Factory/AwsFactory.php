@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Factory;
 
 use Aws\Sdk as AwsSdk;
@@ -15,21 +17,21 @@ class AwsFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array|null $options
+     * @param string             $requestedName
+     * @param array|null         $options
      * @return AwsSdk
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         // Instantiate the AWS SDK for PHP
         $config = $container->get('Config');
-        $config = isset($config['aws']) ? $config['aws'] : [];
+        $config = $config['aws'] ?? [];
 
         $config += [
             'ua_append' => [
                 'ZF2/' . Module::VERSION,
                 'ZFMOD/' . Module::VERSION,
-            ]
+            ],
         ];
 
         return new AwsSdk($config);
@@ -37,6 +39,7 @@ class AwsFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @return AwsSdk
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

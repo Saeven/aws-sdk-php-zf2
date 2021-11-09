@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Factory;
 
 use Aws\Sdk as AwsSdk;
@@ -19,7 +21,7 @@ class S3RenameUploadFactory implements FactoryInterface
      * @param array|null         $options
      * @return S3RenameUpload
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         /** @var AwsSdk $awsSdk */
         $awsSdk = $container->get(AwsSdk::class);

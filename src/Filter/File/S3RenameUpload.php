@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Filter\File;
 
 use Aws\S3\S3Client;
 use AwsModule\Filter\Exception\MissingBucketException;
 use Laminas\Filter\File\RenameUpload;
 
+use function str_replace;
+use function strpos;
+use function substr;
+use function trim;
+
 /**
  * File filter that allow to directly upload to Amazon S3, and optionally rename the file
  */
 class S3RenameUpload extends RenameUpload
 {
-    /**
-     * @var S3Client
-     */
+    /** @var S3Client */
     protected $client;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'bucket'               => null,
         'target'               => null,
@@ -29,7 +32,6 @@ class S3RenameUpload extends RenameUpload
     ];
 
     /**
-     * @param S3Client $client
      * @param array    $options
      */
     public function __construct(S3Client $client, $options = [])
@@ -45,7 +47,6 @@ class S3RenameUpload extends RenameUpload
      * Set the bucket name
      *
      * @param  string $bucket
-     *
      * @return S3RenameUpload
      */
     public function setBucket($bucket)
