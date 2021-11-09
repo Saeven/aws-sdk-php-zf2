@@ -10,7 +10,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 /**
  * DynamoDB-backed session save handler tests
  */
-class DynamoDbSessionSaveHandlerFactoryTest extends \PHPUnit_Framework_TestCase
+class DynamoDbSessionSaveHandlerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanFetchSaveHandlerFromServiceManager()
     {

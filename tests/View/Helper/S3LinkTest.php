@@ -5,7 +5,7 @@ namespace AwsModule\Tests\View\Helper;
 use Aws\S3\S3Client;
 use AwsModule\View\Helper\S3Link;
 
-class S3LinkTest extends \PHPUnit_Framework_TestCase
+class S3LinkTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var S3Client
@@ -17,7 +17,7 @@ class S3LinkTest extends \PHPUnit_Framework_TestCase
      */
     protected $viewHelper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->s3Client = new S3Client([
             'credentials' => [

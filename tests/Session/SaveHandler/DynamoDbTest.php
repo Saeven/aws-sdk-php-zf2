@@ -5,7 +5,7 @@ namespace AwsModule\Tests\Session\SaveHandler;
 use Aws\DynamoDb\SessionHandler;
 use AwsModule\Session\SaveHandler\DynamoDb as DynamoDbSaveHandler;
 
-class DynamoDbTest extends \PHPUnit_Framework_TestCase
+class DynamoDbTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var SessionHandler
@@ -17,7 +17,7 @@ class DynamoDbTest extends \PHPUnit_Framework_TestCase
      */
     protected $saveHandler;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

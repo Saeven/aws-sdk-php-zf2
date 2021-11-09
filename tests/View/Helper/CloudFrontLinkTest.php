@@ -5,7 +5,7 @@ namespace AwsModule\Tests\View\Helper;
 use Aws\CloudFront\CloudFrontClient;
 use AwsModule\View\Helper\CloudFrontLink;
 
-class CloudFrontLinkTest extends \PHPUnit_Framework_TestCase
+class CloudFrontLinkTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CloudFrontClient
@@ -17,7 +17,7 @@ class CloudFrontLinkTest extends \PHPUnit_Framework_TestCase
      */
     protected $viewHelper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->cloudFrontClient = new CloudFrontClient([
             'credentials' => [

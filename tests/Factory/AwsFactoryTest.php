@@ -10,7 +10,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 /**
  * AWS Module test cases
  */
-class AwsFactoryTest extends \PHPUnit_Framework_TestCase
+class AwsFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanFetchAwsFromServiceManager()
     {
