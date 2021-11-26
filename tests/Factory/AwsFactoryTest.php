@@ -34,7 +34,7 @@ class AwsFactoryTest extends \PHPUnit\Framework\TestCase
 
 
         $this->assertArrayHasKey('ua_append', $args);
-        $this->assertInternalType('array', $args['ua_append']);
+        $this->assertIsArray($args['ua_append']);
         $this->assertNotEmpty($args['ua_append']);
         $this->assertNotEmpty(array_filter($args['ua_append'], function ($ua) {
             return false !== strpos($ua, Module::VERSION);

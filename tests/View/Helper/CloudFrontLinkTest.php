@@ -1,31 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwsModule\Tests\View\Helper;
 
 use Aws\CloudFront\CloudFrontClient;
+use AwsModule\View\Exception\InvalidDomainNameException;
 use AwsModule\View\Helper\CloudFrontLink;
+use PHPUnit\Framework\TestCase;
 
-class CloudFrontLinkTest extends \PHPUnit\Framework\TestCase
+use function extension_loaded;
+use function file_exists;
+use function openssl_csr_new;
+use function openssl_csr_sign;
+use function openssl_get_privatekey;
+use function openssl_pkey_export_to_file;
+use function openssl_x509_export;
+use function sys_get_temp_dir;
+use function time;
+
+class CloudFrontLinkTest extends TestCase
 {
-    /**
-     * @var CloudFrontClient
-     */
+    /** @var CloudFrontClient */
     protected $cloudFrontClient;
 
-    /**
-     * @var CloudFrontLink
-     */
+    /** @var CloudFrontLink */
     protected $viewHelper;
 
     protected function setUp(): void
     {
         $this->cloudFrontClient = new CloudFrontClient([
             'credentials' => [
-                'key'    => '1234',
+                'key' => '1234',
                 'secret' => '5678',
             ],
-            'region'  => 'us-east-1',
-            'version' => 'latest'
+            'region' => 'us-east-1',
+            'version' => 'latest',
         ]);
 
         $this->viewHelper = new CloudFrontLink($this->cloudFrontClient);
@@ -71,13 +81,11 @@ class CloudFrontLinkTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('https://123abc.example.com/my-object', $link);
     }
 
-    /**
-     * @expectedException \AwsModule\View\Exception\InvalidDomainNameException
-     */
     public function testFailsWhenDomainIsInvalid()
     {
+        $this->expectException(InvalidDomainNameException::class);
         $this->viewHelper->setDefaultDomain('');
-        $link = $this->viewHelper->__invoke('my-object');
+        $this->viewHelper->__invoke('my-object');
     }
 
     public function testGenerateSignedLink()
@@ -102,7 +110,7 @@ class CloudFrontLinkTest extends \PHPUnit\Framework\TestCase
 
         $this->viewHelper->setHostname('example.com');
         $link = $this->viewHelper->__invoke('my-object', '123abc', time() + 600, 'kpid', $pemFile);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#^https\:\/\/123abc\.example\.com\/my-object\?Expires\=(.*)\&Signature\=(.*)\&Key-Pair-Id\=kpid$#',
             $link
         );
